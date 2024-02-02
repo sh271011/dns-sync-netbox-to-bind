@@ -1,0 +1,5 @@
+---
+bind_directory_path: /etc/bind/zones
+netbox_url: http://192.168.2.9:8000
+netbox_api_token: 40117f4a3ddb6132b87801371f17e8e1398037fd
+dns_sync_directory: "/home/labuser/dns-sync"
