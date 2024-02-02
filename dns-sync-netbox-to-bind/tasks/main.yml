@@ -3,7 +3,6 @@
   apt:
     name: python3-venv
     state: present
-  when: ansible_distribution == 'Ubuntu'  # Adjust for other distributions
 
 - name: Create DNS Sync Directory
   file:
