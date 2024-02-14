@@ -1,70 +1,49 @@
-# Ansible Role: bind-2-netbox-sync
+NetBox to BIND DNS Sync
+=========
 
-### Description
+This role provides DNS Synchronization between NetBox and BIND DNS Servers.
 
-This Ansible role sets up DNS synchronization between BIND and NetBox using OctoDNS.
-
-### Requirements
+Requirements
+------------
 
 - Ansible 2.9 or later
 - Python 3.x
 
-### Role Variables
+Role Variables
+--------------
 
 Role variables are defined in vars/main.yml, replace below variables as per your environment.
-
-```bash
-bind_directory_path: "remote server bind directory path"
-netbox_url: "netbox url"
-netbox_api_token: "netbox_api_token"
-dns-sync-directory: "directory where you want venv to be created"
-```
-At Play Level we have below variable.
-
-- `target_bind_server`: (Required) The target BIND server for synchronization.
-Example:
-
-### Templates
-
-The role uses the following templates.
-
-- **config.j2** , for generating the **config.yaml** file for Octodns
-- **requirements.txt**, file specifying the python dependencies
-- **__init__.py** , to update octodns_netbox plugin to work with docker installation of netbox
-
-### Example Playbook
-
 ```yaml
-- name: NetBox to BIND DNS Sync
-  hosts: bind_server #your target bind server goes here
-  become: true
-  roles:
-    - dns_sync
-
+---
+bind_directory_path: /etc/bind/zones # directory where the zone files are stored
+netbox_url: http://192.168.2.9:8000 #URL of the the netbox
+netbox_api_token: 40117f4a3ddb6132b87801371f17e8e1398037fd #API Auth token to the NetBox
+dns_sync_directory: "/home/labuser/dns-sync" #directory where you will be creating your Virtual Environment and installing the packages
 ```
 
-### Usage
-1. Install ansible
-   
-```bash
-pip install ansible
-```
+Dependencies
+------------
 
-2. Create an inventory file with your BIND server:
-```bash
-[bind_servers]
-your_bind_server ansible_host=your_bind_server_ip
-```
+All the dependent packages are installed by requirements.txt file.
 
-3. Create a playbook (dns-sync.yml) with the example playbook content.
+Example Playbook
+----------------
 
-4. Run the playbook:
+Pleae find below an exmaple playbook on how you can use this role, make sure you define the necessary servers in inventory along with the login credentials:
 
-```bash
-ansible-playbook -i inventory.ini dns-sync.yml
-```
+    - name: NetBox to BIND DNS Sync
+      hosts: bind_server
+      gather_facts: false
+      become: true
+      roles:
+         - dns-sync-netbox-to-bind
 
+License
+-------
 
-### Author Information
-- Author: Shoaib Mohammed Shahapuri
-- Contact: ShoaibMohammed.Shahapuri@wwt.com
+BSD
+
+Author Information
+------------------
+
+ShoaibMohammed.Shahapuri@wwt.com
